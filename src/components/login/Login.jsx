@@ -1,12 +1,25 @@
-import useAuth from "../hooks/useAuth";
+import { useState } from "react";
+import { useAuthContext } from "../../context/useAuthContext";
 import styles from "./login.module.css";
 
 const Login = () => {
-  const { setEmail, setPassword, error, signIn } = useAuth();
+  const { error, signIn } = useAuthContext();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Forhindrer siden i at reloade
+    try {
+      await signIn(email, password);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className={styles.container}>
-      <form onSubmit={signIn} className={styles.form}>
+      <h1>Log ind</h1>
+      <form onSubmit={handleSubmit} className={styles.form}>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <input
           type='email'

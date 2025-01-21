@@ -1,6 +1,6 @@
 .container {
   margin-top: 5vh;
-  width: 100%;
+  width: 300px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -15,9 +15,9 @@
 }
 
 .form {
-  width: 70%;
   color: #255d44;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }

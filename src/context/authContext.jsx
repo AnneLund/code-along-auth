@@ -1,5 +1,5 @@
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -8,7 +8,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [auth, saveAuth] = useLocalStorage("auth", {});
-  const [user, setUser] = useState({});
+  const [user, setUser] = useLocalStorage("user", {});
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -71,11 +71,13 @@ export const AuthContextProvider = ({ children }) => {
     });
 
     let result = await response.json();
+    console.log(result);
 
     const user = jwtDecode(result.data.token); // Dekodér brugeren fra tokenen
 
     saveAuth({ token: result.data.token });
     setUser(user);
+    navigate("/backoffice");
 
     return user;
   };
